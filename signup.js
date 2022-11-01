@@ -8,9 +8,11 @@ const password = document.querySelector('#InputPassword1');
 const student_number = document.querySelector('#InputStudentNum');
 const phone_number = document.querySelector('#InputPhoneNum');
 
-document.querySelector('.enter').addEventListener('keydown', (f) => {
-    if (f.keyCode == 13)//javascript에서는 13이 enter키를 의미함
-        document.querySelector('#signup').click(); //formname에 사용자가 지정한 form의 name입력
+document.querySelectorAll('.enter').forEach((item) => {
+    item.addEventListener('keydown', (f) => {
+        if (f.keyCode == 13)//javascript에서는 13이 enter키를 의미함
+            document.querySelector('#signup').click(); //formname에 사용자가 지정한 form의 name입력
+    });
 });
 //비밀번호 입력시 틀린 양식이면 빨갛게 표현
 password.addEventListener('input', () => {
@@ -39,7 +41,6 @@ phone_number.addEventListener('input', () => {
     phone_number.value = phone_number.value
         .replace(/[^0-9]/g, '').replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g, "$1-$2-$3").replace(/(\-{1,2})$/g, "");
 });
-
 
 //sign up button works
 document.querySelector('#signup').addEventListener('click', () => {

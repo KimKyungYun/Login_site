@@ -4,9 +4,11 @@ const id=document.querySelector('#LoginID');
 const password=document.querySelector('#LoginPW');
 const loginbtn=document.querySelector('#LoginBtn');
 
-document.querySelector('.enter').addEventListener('keydown', (f) => {
-    if (f.keyCode == 13)//javascript에서는 13이 enter키를 의미함
-        document.querySelector('#LoginBtn').click(); //formname에 사용자가 지정한 form의 name입력
+document.querySelectorAll('.enter').forEach((item) => {
+    item.addEventListener('keydown', (f) => {
+        if (f.keyCode == 13)//javascript에서는 13이 enter키를 의미함
+            document.querySelector('#LoginBtn').click(); //formname에 사용자가 지정한 form의 name입력
+    });
 });
 
 loginbtn.addEventListener('click',()=>{
@@ -15,7 +17,7 @@ loginbtn.addEventListener('click',()=>{
    else if(password.value=="")
        alert("비밀번호를 입력해주세요.");
    else if(!id_check.test(id.value)){
-       alert("아이디를 확인해주세요.");
+       alert("아이디 형식을 확인해주세요.");
        id.focus();
    }
    else if(!pass_check.test(password.value)) {
