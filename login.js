@@ -1,5 +1,5 @@
 const id_check = new RegExp('^[a-zA-Z0-9+-\\_.]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$');
-const pass_check = new RegExp('^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$');
+const pass_check = new RegExp('^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,20}$');
 const id=document.querySelector('#LoginID');
 const password=document.querySelector('#LoginPW');
 const loginbtn=document.querySelector('#LoginBtn');

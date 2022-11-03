@@ -10,7 +10,7 @@
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="index.html">BCSD</a>
+        <a class="navbar-brand" href="login.html">BCSD</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -28,27 +28,32 @@
     </div>
 </nav>
 <div style="display: flex;justify-content: center;align-items: center;">
-    <div class="sign_up" style="width:80%; padding:5%; border: 1px solid lightgray;">
+    <div class="sign_up">
         <form id="signup-form">
             <h3>Sign Up</h3>
             <div class="form-group">
-                <label for="InputID1">ID</label>
-                <input type="id" class="form-control id enter" id="InputID1" aria-describedby="Idinput"
+                <label for="InputID">ID</label>
+                <input type="id" class="form-control id enter" id="InputID" aria-describedby="Idinput"
                        placeholder="ex)abc123@gmail.com">
+                <span id="id_alert"> </span>
             </div>
             <div class="form-group">
-                <label for="InputPassword1">Password</label>
-                <input type="password" class="form-control pw enter" id="InputPassword1" placeholder="영어 대소문자와 숫자로 입력">
+                <label for="InputPassword">Password</label>
+                <input type="password" class="form-control pw enter" id="InputPassword"
+                       placeholder="8~20글자 영어 특수 문자 조합으로 입력해주세요." maxlength="20">
+                <span id="password_alert"> </span>
             </div>
             <div class="form-group">
                 <label for="InputPasswordCheck">Password Check</label>
                 <input type="password" class="form-control pw-check enter" id="InputPasswordCheck"
-                       placeholder="Password again">
+                       placeholder="Password again" maxlength="20">
+                <span id="pw_check_alert"> </span>
             </div>
             <div class="form-group">
                 <label for="InputStudentNum">Student Number</label>
                 <input type="StudentNum" class="form-control student-number enter" id="InputStudentNum"
-                       placeholder="Student Number">
+                       placeholder="2000년도 이후의 학번부터 입력이 가능합니다." maxlength="10">
+                <span id="stnum_alert"></span>
             </div>
             <div class="form-group">
                 <label>Major</label>
@@ -57,11 +62,14 @@
             <div class="form-group">
                 <label for="InputPhoneNum">Phone Number</label>
                 <input type="PhoneNum" class="form-control phone-number enter" id="InputPhoneNum"
-                       placeholder="ex)010-1234-5678">
+                       placeholder="ex)010-1234-5678" maxlength="13">
+                <span id="phonenum_alert"></span>
             </div>
-        </form><br>
+
+        </form>
+        <br>
         <button type="button" id="signup" class="btn btn-primary signup">Sign-Up</button>
-        <button type="submit" id="cancel" class="btn btn-primary">Cancel</button>
+        <button type="button" id="cancel" class="btn btn-primary">Cancel</button>
     </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"

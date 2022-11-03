@@ -1,27 +1,15 @@
 const id_check = new RegExp('^[a-zA-Z0-9+-\\_.]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$');
-const pass_check = new RegExp('^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$');
+const pass_check = new RegExp('^(?=.*[A-Za-z])(?=.*\\d)(?=.*[$@$!%*#?&])[A-Za-z\\d$@$!%*#?&]{8,20}$');
 const stnum_check = new RegExp('^20[0-2]{1}[0-9]{1}[0-9]{6}');
 const phone_check = new RegExp('\^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})');
+let submit_check=[false,false,false,false,false];
 
-const id = document.querySelector('#InputID1');
-const password = document.querySelector('#InputPassword1');
+const signup_form=document.querySelector('#signup-form');
+const id = document.querySelector('#InputID');
+const password = document.querySelector('#InputPassword');
+const password_check=document.querySelector('#InputPasswordCheck');
 const student_number = document.querySelector('#InputStudentNum');
 const phone_number = document.querySelector('#InputPhoneNum');
-
-document.querySelectorAll('.enter').forEach((item) => {
-    item.addEventListener('keydown', (f) => {
-        if (f.keyCode == 13)//javascript에서는 13이 enter키를 의미함
-            document.querySelector('#signup').click(); //formname에 사용자가 지정한 form의 name입력
-    });
-});
-//비밀번호 입력시 틀린 양식이면 빨갛게 표현
-password.addEventListener('input', () => {
-    //입력하고있는 내용이 포맷형식에 맞는 경우 검은색으로 표현.
-    if (!pass_check.test(document.querySelector('#InputPassword1').value))
-        password.style.color = 'tomato';
-    else
-        password.style.color = 'black';
-});
 
 //학번에 따라서 학과를 정해주는 코드,학과별 코드를 몰라서 임의로 했습니다.
 student_number.addEventListener('input', () => {
@@ -36,10 +24,56 @@ student_number.addEventListener('input', () => {
     else
         document.querySelector('.major').value = "";
 });
-//전화번호 자동 - 입력
+//전화번호 자동 '-' 입력
 phone_number.addEventListener('input', () => {
     phone_number.value = phone_number.value
-        .replace(/[^0-9]/g, '').replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g, "$1-$2-$3").replace(/(\-{1,2})$/g, "");
+        .replace(/[^0-9]/g, '').replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, "$1-$2-$3").replace(/(\-{1,2})$/g, "");
+});
+//아이디입력오류 경고문구
+id.addEventListener('blur',()=>{
+    if (!id_check.test(id.value))
+        document.querySelector('#id_alert').innerText="이메일형식으로 아이디를 작성해주세요";
+    else {
+        document.querySelector('#id_alert').innerText = "";
+        submit_check=true;
+    }
+});
+//비밀번호입력오류 경고문구
+password.addEventListener('blur',()=>{
+    if(!pass_check.test(password.value))
+        document.querySelector('#password_alert').innerText="형식이 틀렸습니다.(8~20글자 숫자,영어,특수 문자 조합)";
+    else {
+        document.querySelector('#password_alert').innerText = " ";
+        submit_check[1]=true;
+    }
+});
+//비밀번호 확인이 서로 다른경우
+password_check.addEventListener('blur',()=>{
+    if (password_check.value!=password.value)
+        document.querySelector('#pw_check_alert').innerText = "비밀번호가 일치하지 않습니다";
+    else {
+        document.querySelector('#pw_check_alert').innerText = " ";
+        submit_check[2]=true;
+    }
+});
+//학번입력오류
+student_number.addEventListener('blur',()=>{
+    if (!stnum_check.test(student_number.value))
+        document.querySelector('#stnum_alert').innerText="학번을 잘못 입력하셨습니다.";
+    else {
+        document.querySelector('#stnum_alert').innerText = "";
+        submit_check[3]=true;
+    }
+});
+//전화번호입력오류
+phone_number.addEventListener('blur',()=>{
+    if (!phone_check.test(phone_number.value))
+        document.querySelector('#phonenum_alert').innerText = "전화번호를 잘못 입력하셨습니다.";
+
+    else{
+        document.querySelector('#phonenum_alert').innerText="";
+        submit_check[3]=true;
+    }
 });
 
 //sign up button works
@@ -48,27 +82,23 @@ document.querySelector('#signup').addEventListener('click', () => {
     if (id.value == "") {
         alert('아이디 미 입력');
         id.focus();
-    } else if (password.value == "") {
+    }
+    else if (password.value == "") {
         alert('비밀번호 미 입력');
         password.focus();
-    } else if (student_number == "") {
+    }
+    else if (student_number == "") {
         alert('학번 미 입력');
         student_number.focus();
-    } else if (phone_number == '') {
+    }
+    else if (phone_number == '') {
         alert('휴대폰 번호 미 입력');
         phone_number.focus();
     }
-    //입력오류 이벤트
-    else if (!id_check.test(id.value))
-        alert("아이디 형식이 다릅니다.");
-    else if (!pass_check.test(password.value))
-        alert("비밀번호 형식이 다릅니다.")
-    else if (document.querySelector('#InputPasswordCheck').value != password.value)
-        alert("비밀번호가 서로 다릅니다.");
-    else if (!stnum_check.test(student_number.value))
-        alert("학번을 잘못 입력하였습니다.");
-    else if (!phone_check.test(phone_number.value))
-        alert("전화번호를 잘못 입력하였습니다.")
+    else{
+        if (pass_check.every((i)=>{i==true;}))
+            document.querySelector('#signup-form').reset();
+    }
 });
 
 document.querySelector('#cancel').addEventListener('click', () => {    //cancel누를 시 login페이지로 돌아감
