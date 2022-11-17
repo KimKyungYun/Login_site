@@ -1,0 +1,10 @@
+#main_body{
+    padding: 5%;
+    justify-items: center;
+    align-items: center;
+}
+
+.log-in{
+    padding:5%;
+    border: 1px solid lightgray;
+}
